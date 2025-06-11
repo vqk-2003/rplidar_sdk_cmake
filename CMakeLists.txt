@@ -1,6 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.15)
 
 project(rplidar VERSION 2.1.0)
+
+if(NOT UNIX)
+    message(FATAL_ERROR "Cannot build! If on Windows, use the Visual Studio solutions.")
+endif()
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -11,14 +15,10 @@ file(GLOB SRC_FILES
     sdk/src/hal/*.cpp
 )
 
-if(WIN32)
-    file(GLOB EXTRA_SRC_FILES sdk/src/arch/win32/*.cpp)
-elseif(APPLE)
+if(APPLE)
     file(GLOB EXTRA_SRC_FILES sdk/src/arch/macOS/*.cpp)
-elseif(UNIX)
-    file(GLOB EXTRA_SRC_FILES sdk/src/arch/linux/*.cpp)
 else()
-    message(FATAL_ERROR "${CMAKE_SYSTEM} is unsupported!")
+    file(GLOB EXTRA_SRC_FILES sdk/src/arch/linux/*.cpp)
 endif()
 
 list(APPEND SRC_FILES ${EXTRA_SRC_FILES})
