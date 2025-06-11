@@ -7,16 +7,16 @@ set(CMAKE_CXX_STANDARD 11)
 file(GLOB SRC_FILES
     sdk/src/*.cpp
     sdk/src/dataunpacker/*.cpp
-    sdk/src/unpacker/*.cpp
+    sdk/src/dataunpacker/unpacker/*.cpp
     sdk/src/hal/*.cpp
 )
 
 if(WIN32)
-    file(GLOB EXTRA_SRC_FILES sdk/src/win32/*.cpp)
+    file(GLOB EXTRA_SRC_FILES sdk/src/arch/win32/*.cpp)
 elseif(APPLE)
-    file(GLOB EXTRA_SRC_FILES sdk/src/macOS/*.cpp)
+    file(GLOB EXTRA_SRC_FILES sdk/src/arch/macOS/*.cpp)
 elseif(UNIX)
-    file(GLOB EXTRA_SRC_FILES sdk/src/linux/*.cpp)
+    file(GLOB EXTRA_SRC_FILES sdk/src/arch/linux/*.cpp)
 else()
     message(FATAL_ERROR "${CMAKE_SYSTEM} is unsupported!")
 endif()
@@ -41,7 +41,7 @@ target_include_directories(${PROJECT_NAME}
 
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/sdk/include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(
