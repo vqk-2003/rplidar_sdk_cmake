@@ -10,3 +10,4 @@ sdk/obj
 **/ipch
 *.obj
 *.o
+/build*
